@@ -4,6 +4,9 @@ namespace LuckySpin.Models
 {
     public class Repository
     {
+        public Player currentPlayer { get; set; }
+
+
         private List<Spin> spins = new List<Spin>();
 
        //Property
@@ -17,5 +20,6 @@ namespace LuckySpin.Models
         {
             spins.Add(s);
         }
+
     }
 }
