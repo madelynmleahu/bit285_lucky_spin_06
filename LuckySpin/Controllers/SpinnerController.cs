@@ -48,9 +48,7 @@ namespace LuckySpin.Controllers
 
             };
 
- 
-
-            return RedirectToAction("SpinIt", player); 
+            return RedirectToAction("SpinIt", player); //player
         }
 
         /***
@@ -58,7 +56,7 @@ namespace LuckySpin.Controllers
          **/  
          public IActionResult SpinIt(SpinViewModel spin) //TODO: replace the parameter with a ViewModel
         {
-            Player player = new Player(); //added temporarily because player was not being recognized
+
             //Luck = player.Luck,
             spin.A = random.Next(1, 10);
             spin.B = random.Next(1, 10);
@@ -69,14 +67,16 @@ namespace LuckySpin.Controllers
             //Add to Spin Repository
             Spin spinspinner = new Spin();
             {
-                spinspinner.IsWinning = spin.IsWinning;;
+                spinspinner.IsWinning = spin.IsWinning;
             }
             _repository.AddSpin(spinspinner);
 
             //TODO: Clean up ViewBag using a SpinIt ViewModel instead
-            ViewBag.ImgDisplay = (spin.IsWinning) ? "block" : "none";
-            spin.FirstName = player.FirstName;
-            spin.Balance = player.Balance;
+            if (spin.IsWinning)
+                ViewBag.Display = "block";
+            else
+                ViewBag.Display = "none";
+
 
             return View("SpinIt", spin);
         }
