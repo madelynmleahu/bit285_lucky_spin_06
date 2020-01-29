@@ -41,11 +41,10 @@ namespace LuckySpin.Controllers
             _repository.currentPlayer = player;
 
             // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View
-            SpinViewModel spinner = new SpinViewModel()
+            SpinViewModel spinvm = new SpinViewModel()
             {
                 FirstName = player.FirstName,
                 Balance = player.Balance
-
             };
 
             return RedirectToAction("SpinIt", player); //player
@@ -54,31 +53,27 @@ namespace LuckySpin.Controllers
         /***
          * Spin Action - Game Play
          **/  
-         public IActionResult SpinIt(SpinViewModel spin) //TODO: replace the parameter with a ViewModel
+         public IActionResult SpinIt(SpinViewModel spinvm) //TODO: replace the parameter with a ViewModel
         {
 
-            //Luck = player.Luck,
-            spin.A = random.Next(1, 10);
-            spin.B = random.Next(1, 10);
-            spin.C = random.Next(1, 10);
+            //spinvm.Luck;
+            spinvm.A = random.Next(1, 10);
+            spinvm.B = random.Next(1, 10);
+            spinvm.C = random.Next(1, 10);
 
-            spin.IsWinning = (spin.A == spin.Luck || spin.B == spin.Luck || spin.C == spin.Luck);
+            spinvm.IsWinning = (spinvm.A == spinvm.Luck || spinvm.B == spinvm.Luck || spinvm.C == spinvm.Luck);
 
             //Add to Spin Repository
-            Spin spinspinner = new Spin();
-            {
-                spinspinner.IsWinning = spin.IsWinning;
-            }
-            _repository.AddSpin(spinspinner);
+            //_repository.AddSpin(spin);
 
             //TODO: Clean up ViewBag using a SpinIt ViewModel instead
-            if (spin.IsWinning)
+            if (spinvm.IsWinning)
                 ViewBag.Display = "block";
             else
                 ViewBag.Display = "none";
 
 
-            return View("SpinIt", spin);
+            return View("SpinIt", spinvm);
         }
 
         /***
