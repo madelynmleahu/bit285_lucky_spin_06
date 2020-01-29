@@ -5,9 +5,13 @@ namespace LuckySpin.Models
     public class Player
     {
         public long Id { get; set; }
+
         [Display(Prompt = " Your First Name")]
         [Required(ErrorMessage = "Please enter your Name", AllowEmptyStrings = false)]
         public string FirstName { get; set; }
+
+        [Range(1, 9, ErrorMessage = "Choose a number")]
+        public int Luck { get; set; }
 
         /*
          * Balance Property with specialty methods

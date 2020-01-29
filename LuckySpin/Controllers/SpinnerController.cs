@@ -31,21 +31,24 @@ namespace LuckySpin.Controllers
         {
                 return View();
         }
+
         [HttpPost]
         public IActionResult Index(Player player)
         {
             if (!ModelState.IsValid) { return View(); }
 
             // TODO: Add the Player to the Repository
-            //_repository.currentPlayer.Add(player);
-
-
-            SpinViewModel spinner = new SpinViewModel();
-            spinner.FirstName = player.FirstName;
-            spinner.Balance = player.Balance;
-
+            _repository.currentPlayer = player;
 
             // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View
+            SpinViewModel spinner = new SpinViewModel()
+            {
+                FirstName = player.FirstName,
+                Balance = player.Balance
+
+            };
+
+ 
 
             return RedirectToAction("SpinIt", player); 
         }
@@ -55,7 +58,7 @@ namespace LuckySpin.Controllers
          **/  
          public IActionResult SpinIt(SpinViewModel spin) //TODO: replace the parameter with a ViewModel
         {
-
+            Player player = new Player(); //added temporarily because player was not being recognized
             //Luck = player.Luck,
             spin.A = random.Next(1, 10);
             spin.B = random.Next(1, 10);

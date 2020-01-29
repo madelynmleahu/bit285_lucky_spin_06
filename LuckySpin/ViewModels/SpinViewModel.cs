@@ -8,16 +8,12 @@ namespace LuckySpin.ViewModels
     public class SpinViewModel
     {
         public int A { get; set; }
-
         public int B { get; set; }
-
         public int C { get; set; }
-
-        public decimal Balance { get; set; }
+        public bool IsWinning { get; set; }
 
         public string FirstName { get; set; }
-
-        public bool IsWinning { get; set; }
+        public decimal Balance { get; set; }
         public int Luck { get; internal set; }
     }
 }
