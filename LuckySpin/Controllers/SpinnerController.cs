@@ -37,9 +37,13 @@ namespace LuckySpin.Controllers
             if (!ModelState.IsValid) { return View(); }
 
             // TODO: Add the Player to the Repository
+            //_repository.currentPlayer.Add(player);
 
 
-            SpinViewModel spinViewModel = new SpinViewModel(player);
+            SpinViewModel spinner = new SpinViewModel();
+            spinner.FirstName = player.FirstName;
+            spinner.Balance = player.Balance;
+
 
             // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View
 
@@ -49,25 +53,27 @@ namespace LuckySpin.Controllers
         /***
          * Spin Action - Game Play
          **/  
-         public IActionResult SpinIt(Player player) //TODO: replace the parameter with a ViewModel
+         public IActionResult SpinIt(SpinViewModel spin) //TODO: replace the parameter with a ViewModel
         {
-            Spin spin = new Spin
-            {
-                Luck = player.Luck,
-                A = random.Next(1, 10),
-                B = random.Next(1, 10),
-                C = random.Next(1, 10)
-            };
+
+            //Luck = player.Luck,
+            spin.A = random.Next(1, 10);
+            spin.B = random.Next(1, 10);
+            spin.C = random.Next(1, 10);
 
             spin.IsWinning = (spin.A == spin.Luck || spin.B == spin.Luck || spin.C == spin.Luck);
 
             //Add to Spin Repository
-            _repository.AddSpin(spin);
+            Spin spinspinner = new Spin();
+            {
+                spinspinner.IsWinning = spin.IsWinning;;
+            }
+            _repository.AddSpin(spinspinner);
 
             //TODO: Clean up ViewBag using a SpinIt ViewModel instead
             ViewBag.ImgDisplay = (spin.IsWinning) ? "block" : "none";
-            ViewBag.FirstName = player.FirstName;
-            ViewBag.Balance = player.Balance;
+            spin.FirstName = player.FirstName;
+            spin.Balance = player.Balance;
 
             return View("SpinIt", spin);
         }
@@ -77,7 +83,7 @@ namespace LuckySpin.Controllers
          **/
          public IActionResult LuckList()
         {
-                return View(_repository.PlayerSpins);
+                return View();
         }
     }
 }

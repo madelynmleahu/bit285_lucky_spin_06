@@ -13,5 +13,11 @@ namespace LuckySpin.ViewModels
 
         public int C { get; set; }
 
+        public decimal Balance { get; set; }
+
+        public string FirstName { get; set; }
+
+        public bool IsWinning { get; set; }
+        public int Luck { get; internal set; }
     }
 }
